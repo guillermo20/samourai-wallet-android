@@ -133,6 +133,9 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
         />
 
+        <activity android:name=".CreateWalletActivity"
+            android:theme="@android:style/Theme.Material.NoActionBar"/>
+
         <service android:enabled="true" android:name="com.samourai.wallet.service.BroadcastReceiverService" />
 
         <service android:enabled="true" android:name="com.samourai.wallet.service.WebSocketService" />

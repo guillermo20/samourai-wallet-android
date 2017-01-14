@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         }
 
         doMain(strUri);
-
+        //launchWizard();
     }
 
     @Override
@@ -48,4 +48,8 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    private void launchWizard(){
+        Intent intent = new Intent(this,CreateWalletActivity.class);
+        startActivity(intent);
+    }
 }
