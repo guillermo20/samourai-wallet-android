@@ -377,5 +377,9 @@
     <string name="tor_routing_on">Samourai is routing via Tor.</string>
     <string name="tor_routing_off">Samourai is not routing via Tor. Tap to activate.</string>
     <string name="tor_install">Tap to install Orbot and route Samourai through Tor.</string>
+    <string name="samourai_text">Samourai</string>
+    <string name="import_wallet_seed">Import Wallet Seed</string>
+    <string name="new_wallet">New Wallet</string>
+    <string name="restore_backup">Restore Backup</string>
 
 </resources>
