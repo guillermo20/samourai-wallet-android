@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 //import android.util.Log;
 
 import com.samourai.wallet.SamouraiWallet;
+import com.samourai.wallet.SendActivity;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
@@ -17,6 +18,7 @@ import com.samourai.wallet.crypto.DecryptionException;
 import com.samourai.wallet.hd.HD_Account;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.hd.HD_WalletFactory;
+import com.samourai.wallet.ricochet.RicochetMeta;
 import com.samourai.wallet.util.AddressFactory;
 import com.samourai.wallet.util.CharSequenceX;
 import com.samourai.wallet.util.PrefsUtil;
@@ -154,10 +156,11 @@ public class PayloadUtil	{
             JSONObject meta = new JSONObject();
             meta.put("prev_balance", APIFactory.getInstance(context).getXpubBalance());
             meta.put("sent_tos", SendAddressUtil.getInstance().toJSON());
-            meta.put("spend_type", PrefsUtil.getInstance(context).getValue(PrefsUtil.SPEND_TYPE, 1));
+            meta.put("spend_type", PrefsUtil.getInstance(context).getValue(PrefsUtil.SPEND_TYPE, SendActivity.SPEND_BIP126));
             meta.put("bip47", BIP47Meta.getInstance().toJSON());
             meta.put("pin", AccessFactory.getInstance().getPIN());
             meta.put("pin2", AccessFactory.getInstance().getPIN2());
+            meta.put("ricochet", RicochetMeta.getInstance(context).toJSON());
 
             meta.put("units", PrefsUtil.getInstance(context).getValue(PrefsUtil.BTC_UNITS, 0));
             meta.put("explorer", PrefsUtil.getInstance(context).getValue(PrefsUtil.BLOCK_EXPLORER, 0));
@@ -279,6 +282,8 @@ public class PayloadUtil	{
                 }
                 if(meta.has("spend_type")) {
                     PrefsUtil.getInstance(context).setValue(PrefsUtil.SPEND_TYPE, meta.getInt("spend_type"));
+                    editor.putBoolean("bip126", meta.getInt("spend_type") == SendActivity.SPEND_BIP126 ? true : false);
+                    editor.commit();
                 }
                 if(meta.has("sent_tos")) {
                     SendAddressUtil.getInstance().fromJSON((JSONArray) meta.get("sent_tos"));
@@ -299,6 +304,9 @@ public class PayloadUtil	{
                 }
                 if(meta.has("pin2")) {
                     AccessFactory.getInstance().setPIN2((String) meta.get("pin2"));
+                }
+                if(meta.has("ricochet")) {
+                    RicochetMeta.getInstance(context).fromJSON((JSONObject) meta.get("ricochet"));
                 }
 
                 if(meta.has("units")) {
