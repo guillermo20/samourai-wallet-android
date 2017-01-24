@@ -21,8 +21,8 @@ public class MainActivity extends Activity {
             strUri = getIntent().getData().toString();
         }
 
-        doMain(strUri);
-        //launchWizard();
+        //doMain(strUri);
+        launchWizard();
     }
 
     @Override
@@ -50,6 +50,7 @@ public class MainActivity extends Activity {
 
     private void launchWizard(){
         Intent intent = new Intent(this,CreateWalletActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }
