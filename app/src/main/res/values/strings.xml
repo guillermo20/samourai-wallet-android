@@ -2,7 +2,7 @@
 <resources>
 
     <string name="code_name">\'DD\'</string>
-    <string name="version_name">0.92.01</string>
+    <string name="version_name">0.92.10</string>
     <string name="app_name">Samourai</string>
 
     <string name="new_version_message">Welcome to Samourai Alpha 1 \'DD\'. We are building the most secure and private mobile wallet. In this version:\n\nUpdated algorithim allows you to define the amount of obfuscation per transaction basis\n\nUse ShapeShift to receive payment in 30+ altcoins and auto convert to bitcoin held in your wallet\n\nEnable VPN or Tor to relay all transactions through an anonymous IP address\n\nand much, much more...</string>
@@ -94,6 +94,7 @@
     <string name="options_txs2">Transaction settings.</string>
     <string name="options_bip126">Spend using BIP126</string>
     <string name="options_bip126_2">Spends will use BIP126 for increased obfuscation.</string>
+    <string name="options_utxo">Show unspent outputs</string>
 
     <string name="select_currency">Select currency</string>
 
@@ -118,6 +119,7 @@
     <string name="ask_you_sure_exit">Are you sure you want to exit Samourai?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="close">Close</string>
 
     <string name="sim_warning">Your Samourai Wallet device now has a different SIM card corresponding to incoming number of this text message.</string>
 
@@ -338,7 +340,6 @@
     <string name="alias">Alias</string>
     <string name="label">Label</string>
     <string name="next">Next</string>
-    <string name="close">Close</string>
     <string name="confirm">Confirm</string>
     <string name="payment_code">Payment code</string>
     <string name="payment_channel_init">Notification transaction sent. Your payment channel is being created.</string>
@@ -362,6 +363,7 @@
     <string name="bip47_sign">Sign message</string>
     <string name="bip47_sign_text1">Sign message using BIP47 notification address private key?</string>
     <string name="bip47_sign_text2">Signed using my BIP47 notification address.</string>
+    <string name="bip47_wait_for_confirmation_or_retry">This payment channel is waiting for 1 confirmation before sending is activated. Would you like to discard the previous attempt and resend a notification?></string>
 
     <string name="no_confirmed_outputs_available">No confirmed outputs available. Please try again later.</string>
     <string name="rbf_incoming">The incoming transaction is replace-by-fee. View in block explorer?</string>
@@ -405,8 +407,17 @@
     <string name="action_ricochet_script">Display Ricochet script</string>
     <string name="action_ricochet_replay">Resend Ricochet</string>
     <string name="ricochet_replay">Do you want to rebroadcast this Ricochet spend?</string>
+    <string name="ricochet_not_broadcast_replay">There was a problem broadcasting your Ricochet. Do you want to rebroadcast this Ricochet spend?</string>
     <string name="no_ricochet_replay">There is no Ricochet to be resent.</string>
     <string name="no_ricochet_display">There is no Ricochet script to display.</string>
     <string name="ricochet_broadcast">Your Ricochet has been broadcast.</string>
+
+    <string name="utxos">Unspent outputs</string>
+
+    <string name="bip47_cannot_identify_outpoint">Unable to mask outgoing payment code</string>
+    <string name="bip47_cannot_compose_notif_tx">Unable to compose notification tx</string>
+    <string name="bip47_bad_outpoint">Bad outpoint used for masking payment code</string>
+
+    <string name="pushtx_returns_null">Spend failed. Server returned null value.</string>
 
 </resources>
