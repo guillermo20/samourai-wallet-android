@@ -419,5 +419,6 @@
     <string name="bip47_bad_outpoint">Bad outpoint used for masking payment code</string>
 
     <string name="pushtx_returns_null">Spend failed. Server returned null value.</string>
-
+    <string name="create_new_wallet">Create New Wallet</string>
+    <string name="passphrase_text">Enter a passphrase that will be used to encrypt your wallet. Do not forget this passphrase!</string>
 </resources>

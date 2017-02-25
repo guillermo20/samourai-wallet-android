@@ -11,6 +11,6 @@ public class CreateWalletActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_wallet);
+        setContentView(R.layout.activity_passphrase);
     }
 }
