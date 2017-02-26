@@ -421,4 +421,5 @@
     <string name="pushtx_returns_null">Spend failed. Server returned null value.</string>
     <string name="create_new_wallet">Create New Wallet</string>
     <string name="passphrase_text">Enter a passphrase that will be used to encrypt your wallet. Do not forget this passphrase!</string>
+    <string name="pin_text">Enter a PIN code between 5-8 digits. this is used to quickly access your wallet on this divice</string>
 </resources>
