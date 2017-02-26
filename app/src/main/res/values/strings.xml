@@ -422,4 +422,6 @@
     <string name="create_new_wallet">Create New Wallet</string>
     <string name="passphrase_text">Enter a passphrase that will be used to encrypt your wallet. Do not forget this passphrase!</string>
     <string name="pin_text">Enter a PIN code between 5-8 digits. this is used to quickly access your wallet on this divice</string>
+    <string name="seedwords_text">These 12 words are your wallet seed. They are used to restore your balance if you lose your divice. Do not lose this wallet seed! Write it down!</string>
+    <string name="seedwords_buttons_text">Press and hold each button to reveal a single word. Write the words down in the order they are displayed</string>
 </resources>
