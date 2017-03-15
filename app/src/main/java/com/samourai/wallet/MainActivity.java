@@ -3,10 +3,6 @@ package com.samourai.wallet;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.samourai.wallet.access.AccessFactory;
-import com.samourai.wallet.util.TimeOutUtil;
 
 public class MainActivity extends Activity {
 
@@ -24,8 +20,8 @@ public class MainActivity extends Activity {
             strUri = getIntent().getData().toString();
         }
 
-        //doMain(strUri);
-        launchWizard();
+        doMain(strUri);
+        //launchWizard();
     }
 
     @Override

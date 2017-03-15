@@ -41,6 +41,7 @@
         android:layout_marginEnd="60dp"/>
 
     <EditText
+        android:id="@+id/passphrase"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="60dp"
@@ -51,6 +52,7 @@
         />
 
     <TextView
+        android:id="@+id/next_button"
         android:layout_marginTop="90dp"
         android:layout_marginStart="46dp"
         android:layout_marginEnd="46dp"

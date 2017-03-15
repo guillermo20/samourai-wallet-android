@@ -20,16 +20,12 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-//import android.util.Log;
-
-import org.bitcoinj.crypto.MnemonicException;
 
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
@@ -50,6 +46,7 @@ import com.samourai.wallet.util.TimeOutUtil;
 import com.samourai.wallet.util.WebUtil;
 
 import org.apache.commons.codec.DecoderException;
+import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,6 +56,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+//import android.util.Log;
 
 public class MainActivity2 extends Activity {
 
@@ -228,7 +227,10 @@ public class MainActivity2 extends Activity {
         if(TimeOutUtil.getInstance().isTimedOut()) {
             if(AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists()) {
                 AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
-                initDialog();
+                //comented this initdilog since from now on the create wallet
+                // workflow will go through a wizard made of activities
+                //initDialog();
+                initWallet();
             }
             else {
                 AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
@@ -265,6 +267,13 @@ public class MainActivity2 extends Activity {
         AppUtil.getInstance(MainActivity2.this).deleteBackup();
 
         super.onDestroy();
+    }
+
+
+    private void initWallet(){
+        Intent intent = new Intent(this,CreateWalletActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void initDialog()	{
