@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class PinEntryActivity extends Activity {
     private ImageButton tback = null;
 
     private TextView tvPrompt = null;
+    private LinearLayout headerPromt = null;
     private TextView tvUserInput = null;
 
     private ScrambledPin keypad = null;
@@ -81,6 +83,8 @@ public class PinEntryActivity extends Activity {
         tvUserInput.setText("");
 
         tvPrompt = (TextView)findViewById(R.id.prompt2);
+
+        headerPromt = (LinearLayout)findViewById(R.id.prompt);
 
         boolean scramble = PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.SCRAMBLE_PIN, false);
 
@@ -113,8 +117,8 @@ public class PinEntryActivity extends Activity {
             strPassphrase = extras.getString("passphrase");
             Toast.makeText(PinEntryActivity.this, R.string.pin_5_8_confirm, Toast.LENGTH_LONG).show();
         }
-        else	{
-            ;
+        else if (scramble == true)	{
+            headerPromt.setVisibility(View.INVISIBLE);
         }
 
         if(strSeed != null && strSeed.length() < 1)	{
