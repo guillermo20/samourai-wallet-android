@@ -10,16 +10,12 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.crypto.MnemonicException;
-
-import com.samourai.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.access.ScrambledPin;
 import com.samourai.wallet.crypto.AESUtil;
@@ -33,6 +29,8 @@ import com.samourai.wallet.util.PrefsUtil;
 import com.samourai.wallet.util.TimeOutUtil;
 
 import org.apache.commons.codec.DecoderException;
+import org.bitcoinj.core.AddressFormatException;
+import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -72,6 +70,7 @@ public class PinEntryActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
         setContentView(R.layout.grid);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -96,13 +95,13 @@ public class PinEntryActivity extends Activity {
         Bundle extras = getIntent().getExtras();
 
         if(extras != null && extras.containsKey("create") && extras.getBoolean("create") == true)	{
-            tvPrompt.setText(R.string.create_pin);
+            //tvPrompt.setText(R.string.create_pin);
             scramble = false;
             create = true;
             confirm = false;
             strSeed = extras.getString("seed");
             strPassphrase = extras.getString("passphrase");
-            Toast.makeText(PinEntryActivity.this, R.string.pin_5_8, Toast.LENGTH_LONG).show();
+            //Toast.makeText(PinEntryActivity.this, R.string.pin_5_8, Toast.LENGTH_LONG).show();
         }
         else if(extras != null && extras.containsKey("confirm") && extras.getBoolean("confirm") == true)	{
             tvPrompt.setText(R.string.confirm_pin);
