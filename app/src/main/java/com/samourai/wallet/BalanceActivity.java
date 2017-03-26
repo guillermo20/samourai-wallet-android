@@ -19,9 +19,11 @@ import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,6 +43,7 @@ import android.widget.Toast;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.Transaction;
 import org.bitcoinj.crypto.BIP38PrivateKey;
 import org.bitcoinj.crypto.MnemonicException;
 
@@ -70,10 +73,12 @@ import com.samourai.wallet.util.ExchangeRateFactory;
 import com.samourai.wallet.util.MonetaryUtil;
 import com.samourai.wallet.util.PrefsUtil;
 import com.samourai.wallet.util.PrivKeyReader;
+import com.samourai.wallet.util.RBFUtil;
 import com.samourai.wallet.util.TimeOutUtil;
 import com.samourai.wallet.util.TorUtil;
 import com.samourai.wallet.util.TypefaceUtil;
 import com.samourai.wallet.util.WebUtil;
+import com.subgraph.orchid.Tor;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.params.MainNetParams;
@@ -303,7 +308,7 @@ public class BalanceActivity extends Activity {
 
                 long viewId = view.getId();
                 View v = (View)view.getParent();
-                Tx tx = txs.get(position - 1);
+                final Tx tx = txs.get(position - 1);
                 ImageView ivTxStatus = (ImageView)v.findViewById(R.id.TransactionStatus);
                 TextView tvConfirmationCount = (TextView)v.findViewById(R.id.ConfirmationCount);
 
@@ -320,6 +325,49 @@ public class BalanceActivity extends Activity {
 
                 }
                 else {
+
+                    /*
+                    String message = getString(R.string.options_unconfirmed_tx);
+                    String option = null;
+
+                    // RBF
+                    if(tx.getConfirmations() < 1 && tx.getAmount() < 0.0 && RBFUtil.getInstance().contains(tx.getHash()))    {
+                        option = getString(R.string.options_rbf);
+                    }
+                    // CPFP
+                    else if(tx.getConfirmations() < 1 && tx.getAmount() >= 0.0)   {
+                        option = getString(R.string.options_cpfp);
+                    }
+                    else    {
+                        doExplorerView(tx.getHash());
+                        return;
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BalanceActivity.this);
+                    builder.setTitle(R.string.app_name);
+                    builder.setMessage(message);
+                    builder.setCancelable(true);
+                    builder.setPositiveButton(option, new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, int whichButton) {
+
+                            if(tx.getAmount() < 0.0)    {
+                                doRBF(tx);
+                            }
+                            else    {
+                                doCPFP(tx);
+                            }
+
+                        }
+                    });
+                    builder.setNegativeButton(R.string.options_block_explorer, new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, int whichButton) {
+                            doExplorerView(tx.getHash());
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    */
 
                     doExplorerView(tx.getHash());
 
@@ -350,7 +398,7 @@ public class BalanceActivity extends Activity {
         IntentFilter filter = new IntentFilter(ACTION_INTENT);
         LocalBroadcastManager.getInstance(BalanceActivity.this).registerReceiver(receiver, filter);
 
-        TorUtil.getInstance(BalanceActivity.this).setStatusFromBroadcast(false);
+//        TorUtil.getInstance(BalanceActivity.this).setStatusFromBroadcast(false);
         registerReceiver(torStatusReceiver, new IntentFilter(OrbotHelper.ACTION_STATUS));
 
         refreshTx(false, true, false);
@@ -363,6 +411,10 @@ public class BalanceActivity extends Activity {
 
 //        IntentFilter filter = new IntentFilter(ACTION_INTENT);
 //        LocalBroadcastManager.getInstance(BalanceActivity.this).registerReceiver(receiver, filter);
+
+        if(TorUtil.getInstance(BalanceActivity.this).statusFromBroadcast())    {
+            OrbotHelper.requestStartTor(BalanceActivity.this);
+        }
 
         AppUtil.getInstance(BalanceActivity.this).checkTimeOut();
 
@@ -402,9 +454,18 @@ public class BalanceActivity extends Activity {
         if(!OrbotHelper.isOrbotInstalled(BalanceActivity.this))    {
             menu.findItem(R.id.action_tor).setVisible(false);
         }
+        else if(TorUtil.getInstance(BalanceActivity.this).statusFromBroadcast())   {
+            OrbotHelper.requestStartTor(BalanceActivity.this);
+            menu.findItem(R.id.action_tor).setIcon(R.drawable.tor_on);
+        }
+        else    {
+            menu.findItem(R.id.action_tor).setIcon(R.drawable.tor_off);
+        }
         menu.findItem(R.id.action_refresh).setVisible(false);
         menu.findItem(R.id.action_share_receive).setVisible(false);
         menu.findItem(R.id.action_ricochet).setVisible(false);
+        menu.findItem(R.id.action_sign).setVisible(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -1199,6 +1260,23 @@ public class BalanceActivity extends Activity {
             startActivity(browserIntent);
         }
 
+    }
+
+    private void doRBF(Tx tx) {
+        // get hash
+        // retrieve serialized tx
+        // recalc fee
+        // add utxo(s), if necessary
+        // re-spend
+        Toast.makeText(BalanceActivity.this, R.string.options_rbf, Toast.LENGTH_SHORT).show();
+    }
+
+    private void doCPFP(Tx tx) {
+        // get hash
+        // get tx
+        // match amounts to find output
+        // spend utxo
+        Toast.makeText(BalanceActivity.this, R.string.options_cpfp, Toast.LENGTH_SHORT).show();
     }
 
     private class RefreshTask extends AsyncTask<String, Void, String> {
