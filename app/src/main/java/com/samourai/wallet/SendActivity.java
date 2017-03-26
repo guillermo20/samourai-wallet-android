@@ -41,6 +41,7 @@ import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
 import com.samourai.wallet.hd.HD_WalletFactory;
+import com.samourai.wallet.ricochet.RicochetActivity;
 import com.samourai.wallet.ricochet.RicochetMeta;
 import com.samourai.wallet.send.FeeUtil;
 import com.samourai.wallet.send.MyTransactionOutPoint;
@@ -1205,6 +1206,7 @@ public class SendActivity extends Activity {
         menu.findItem(R.id.action_share_receive).setVisible(false);
         menu.findItem(R.id.action_utxo).setVisible(false);
         menu.findItem(R.id.action_tor).setVisible(false);
+        menu.findItem(R.id.action_sign).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

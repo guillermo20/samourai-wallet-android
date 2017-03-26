@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "25.0.1"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId 'com.samourai.wallet'
         minSdkVersion 21
         targetSdkVersion 21
-        versionCode 45
-        versionName "0.92.10"
+        versionCode 48
+        versionName "0.92.30"
         // Enabling multidex support.
         multiDexEnabled true
     }
