@@ -15,4 +15,6 @@
     <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="text_size_20sp">20sp</dimen>
     <dimen name="text_size_24sp">24sp</dimen>
+
+    <dimen name="text_horizontal_margin">4dp</dimen>
 </resources>

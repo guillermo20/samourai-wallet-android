@@ -1,9 +1,8 @@
 package com.samourai.wallet;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -68,6 +67,7 @@ public class PinEntryActivity extends Activity {
     private ProgressDialog progress = null;
 
     private String strUri = null;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class PinEntryActivity extends Activity {
         getActionBar().hide();
         setContentView(R.layout.grid);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        context = this;
         userInput = new StringBuilder();
         keypad = new ScrambledPin();
 
@@ -522,20 +522,25 @@ public class PinEntryActivity extends Activity {
                             catch(MnemonicException.MnemonicLengthException mle) {
                                 mle.printStackTrace();
                             }
+                            ///TODO: show the mnemonic layout here.
 
-                            new AlertDialog.Builder(PinEntryActivity.this)
-                                    .setTitle(R.string.app_name)
-                                    .setMessage(getString(R.string.alpha_create_wallet) + "\n\n" + seed)
-                                    .setCancelable(false)
-                                    .setPositiveButton(R.string.alpha_create_confirm_backup, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Intent mnemonicIntent = new Intent(context,CreateWalletActivity.MnemonicWordsActivity.class);
+                            mnemonicIntent.putExtra("seed",seed);
+                            startActivity(mnemonicIntent);
 
-                                            AccessFactory.getInstance(PinEntryActivity.this).setIsLoggedIn(true);
-                                            TimeOutUtil.getInstance().updatePin();
-                                            AppUtil.getInstance(PinEntryActivity.this).restartApp();
-
-                                        }
-                                    }).show();
+//                            new AlertDialog.Builder(PinEntryActivity.this)
+//                                    .setTitle(R.string.app_name)
+//                                    .setMessage(getString(R.string.alpha_create_wallet) + "\n\n" + seed)
+//                                    .setCancelable(false)
+//                                    .setPositiveButton(R.string.alpha_create_confirm_backup, new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int whichButton) {
+//
+//                                            AccessFactory.getInstance(PinEntryActivity.this).setIsLoggedIn(true);
+//                                            TimeOutUtil.getInstance().updatePin();
+//                                            AppUtil.getInstance(PinEntryActivity.this).restartApp();
+//
+//                                        }
+//                                    }).show();
 
                         }
                         else {
